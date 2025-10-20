@@ -8,7 +8,7 @@ This is a browser-based tool for comparing **human** and **machine** translation
 
 ---
 
-## Translations
+## 🔠 Translations
 
 - **Machine Translations for folder AI-2025-10**  
   Transcription: [TurboScribe](https://turboscribe.ai)
