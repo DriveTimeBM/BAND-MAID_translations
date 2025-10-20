@@ -4,62 +4,86 @@
   <meta charset="UTF‑8">
   <title>BAND‑MAID Translations Comparison</title>
   <style>
-    body {
-      font-family: Arial, sans‑serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      height: 100vh;
-    }
-    #sidebar {
-      width: 200px;
-      border-right: 1px solid #ccc;
-      overflow-y: auto;
-      padding: 10px;
-      background: #f9f9f9;
-    }
-    #main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    #topbar {
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-    }
-    #content {
-      flex: 1;
-      display: flex;
-      overflow: hidden;
-    }
-    .pane {
-      width: 50%; /* updated from flex:1 */
-      padding: 10px;
-      overflow-y: auto;
-      border-right: 1px solid #ddd;
-    }
-    .pane:last-child {
-      border-right: none;
-    }
-    #rating {
-      padding: 10px;
-      border-top: 1px solid #ccc;
-    }
-    #machineSelect {
-      margin-left: 10px;
-    }
-    .video-id-item {
-      padding: 5px;
-      cursor: pointer;
-    }
-    .video-id-item:hover {
-      background-color: #eee;
-    }
-    .video-id-item.selected {
-      background-color: #ddd;
-      font-weight: bold;
-    }
-  </style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#sidebar {
+  width: 220px;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+  padding: 10px;
+  background: #f5f5f5;
+}
+
+#videoList {
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+.video-id-item {
+  padding: 6px 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+.video-id-item:hover {
+  background-color: #eaeaea;
+}
+.video-id-item.selected {
+  background-color: #d0e0ff;
+  font-weight: bold;
+}
+
+#main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#topbar {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background: #fafafa;
+}
+
+#content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.pane {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+
+.pane:last-child {
+  border-right: none;
+}
+
+.pane pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  flex: 1;
+}
+
+#rating {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background: #fafafa;
+}
+</style>
 </head>
 
     <body>
@@ -85,7 +109,7 @@
             <label><input type="radio" name="rating" value="M" /> Machine (M)</label>
           </div>
         </div>
-        
+
         <script src="script.js"></script>
 
       </body>
