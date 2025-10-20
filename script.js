@@ -1,6 +1,6 @@
 // script.js
 (async () => {
-    
+
     let manifest;
     try {
       manifest = await fetch('manifest.json').then(r => {
@@ -118,5 +118,20 @@
     if (allIds.length > 0) {
       selectId(allIds[0]);
     }
+
+    // Helper to download ratings as a file
+    document.getElementById('downloadRatingsBtn').addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(ratings, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ratings.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+  
+
   })();
   
