@@ -1,33 +1,34 @@
 (async () => {
     let manifest;
     try {
-      manifest = await fetch('manifest.json').then(r => {
-        if (!r.ok) throw new Error('Manifest fetch failed');
-        return r.json();
-      });
+      const resp = await fetch('manifest.json');
+      if (!resp.ok) throw new Error(`Manifest fetch failed: ${resp.status}`);
+      manifest = await resp.json();
     } catch (err) {
       console.error("❌ Failed to load manifest.json:", err.message);
-      alert("Manifest file not found or invalid. Please ensure 'manifest.json' exists and is valid.");
+      alert("Manifest file not found or invalid.");
       return;
     }
   
     const humanList = manifest.human || [];
     const machineFolders = Object.keys(manifest.machine || {});
-  
     const idSet = new Set(humanList);
+  
     machineFolders.forEach(folder => {
       (manifest.machine[folder] || []).forEach(id => idSet.add(id));
     });
   
     const allIds = Array.from(idSet).sort((a, b) => Number(a) - Number(b));
   
+    let ratings = {};
     const stored = localStorage.getItem('ratings');
-    let ratings = stored ? JSON.parse(stored) : {};
-    allIds.forEach(id => {
-      if (!(id in ratings)) ratings[id] = "-";
-    });
+    if (stored) {
+      try { ratings = JSON.parse(stored); } catch { ratings = {}; }
+    }
+    allIds.forEach(id => { if (!(id in ratings)) ratings[id] = "-"; });
     localStorage.setItem('ratings', JSON.stringify(ratings));
   
+    // Populate dropdown
     const machineSelect = document.getElementById('machineSelect');
     machineFolders.forEach(folder => {
       const opt = document.createElement('option');
@@ -36,19 +37,25 @@
       machineSelect.appendChild(opt);
     });
   
+    // Create clickable list of videos
     const videoListDiv = document.getElementById('videoList');
     let currentId = null;
   
-    allIds.forEach(id => {
-      const div = document.createElement('div');
-      div.textContent = `${id} [${ratings[id]}]`;
-      div.className = 'video-id-item';
-      div.dataset.videoId = id;
-      div.addEventListener('click', () => selectId(id));
-      videoListDiv.appendChild(div);
-    });
+    function renderVideoList() {
+      videoListDiv.innerHTML = "";
+      allIds.forEach(id => {
+        const div = document.createElement('div');
+        div.textContent = `${id} [${ratings[id]}]`;
+        div.className = 'video-id-item';
+        div.dataset.videoId = id;
+        div.addEventListener('click', () => {
+          selectId(id);
+        });
+        videoListDiv.appendChild(div);
+      });
+    }
   
-    function updateListSelection() {
+    function highlightSelected() {
       document.querySelectorAll('.video-id-item').forEach(el => {
         el.classList.toggle('selected', el.dataset.videoId === currentId);
       });
@@ -56,7 +63,7 @@
   
     async function selectId(id) {
       currentId = id;
-      updateListSelection();
+      highlightSelected();
   
       document.getElementById('videoLink').innerHTML =
         `<a href="https://bandmaid.tokyo/movies/${id}" target="_blank">https://bandmaid.tokyo/movies/${id}</a>`;
@@ -64,7 +71,7 @@
       const humanText = document.getElementById('humanText');
       try {
         const txt = await fetch(`human/${id}.txt`).then(r => {
-          if (!r.ok) throw new Error('Not found');
+          if (!r.ok) throw new Error();
           return r.text();
         });
         humanText.textContent = txt;
@@ -76,7 +83,7 @@
       const folder = machineSelect.value;
       try {
         const txt = await fetch(`${folder}/${id}.txt`).then(r => {
-          if (!r.ok) throw new Error('Not found');
+          if (!r.ok) throw new Error();
           return r.text();
         });
         machineText.textContent = txt;
@@ -96,8 +103,7 @@
       if (["-", "H", "M"].includes(val)) {
         ratings[currentId] = val;
         localStorage.setItem('ratings', JSON.stringify(ratings));
-        const label = `${currentId} [${val}]`;
-        document.querySelector(`.video-id-item[data-video-id="${currentId}"]`).textContent = label;
+        renderVideoList(); // Refresh labels
       }
     });
   
@@ -106,5 +112,18 @@
     });
   
     document.getElementById('downloadRatingsBtn').addEventListener('click', () => {
-      const blob = new Blob([JSON.stringify(ratings, null, 2)], { type
+      const blob = new Blob([JSON.stringify(ratings, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ratings.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  
+    renderVideoList();
+    if (allIds.length > 0) selectId(allIds[0]); // ✅ Automatically select first video
+  })();
   
