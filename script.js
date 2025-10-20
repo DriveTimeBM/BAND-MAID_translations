@@ -42,19 +42,25 @@
     let currentId = null;
   
     function renderVideoList() {
-      videoListDiv.innerHTML = "";
-      allIds.forEach(id => {
-        const div = document.createElement('div');
-        div.textContent = `${id} [${ratings[id]}]`;
-        div.className = 'video-id-item';
-        div.dataset.videoId = id;
-        div.addEventListener('click', () => {
-          selectId(id);
+        const filterText = document.getElementById('searchBox').value.trim().toLowerCase();
+        const onlyUnrated = document.getElementById('filterUnrated').checked;
+      
+        videoListDiv.innerHTML = "";
+        allIds.forEach(id => {
+          const rating = ratings[id];
+          if (onlyUnrated && rating !== "-") return;
+          if (filterText && !id.includes(filterText)) return;
+      
+          const div = document.createElement('div');
+          div.textContent = `${id} [${rating}]`;
+          div.className = 'video-id-item';
+          div.dataset.videoId = id;
+          div.addEventListener('click', () => selectId(id));
+          if (id === currentId) div.classList.add('selected');
+          videoListDiv.appendChild(div);
         });
-        videoListDiv.appendChild(div);
-      });
-    }
-  
+      }
+        
     function highlightSelected() {
       document.querySelectorAll('.video-id-item').forEach(el => {
         el.classList.toggle('selected', el.dataset.videoId === currentId);
@@ -124,6 +130,32 @@
     });
   
     renderVideoList();
+    if (allIds.length > 0) selectId(allIds[0]);
+    
+    // 🔍 Search box updates list
+    document.getElementById('searchBox').addEventListener('input', renderVideoList);
+    
+    // 🟡 Unrated checkbox filters list
+    document.getElementById('filterUnrated').addEventListener('change', renderVideoList);
+    
+    // ⏭️ Jump to next unrated
+    document.getElementById('jumpNextUnrated').addEventListener('click', () => {
+      if (!currentId) return;
+      const currentIndex = allIds.indexOf(currentId);
+      const total = allIds.length;
+      for (let i = 1; i < total; i++) {
+        const nextIndex = (currentIndex + i) % total;
+        const nextId = allIds[nextIndex];
+        if (ratings[nextId] === "-") {
+          selectId(nextId);
+          return;
+        }
+      }
+      alert("✅ No unrated videos remaining!");
+    });
+    
+
+
     if (allIds.length > 0) selectId(allIds[0]); // ✅ Automatically select first video
   })();
   
