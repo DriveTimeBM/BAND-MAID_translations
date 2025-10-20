@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF‑8">
+  <title>BAND‑MAID Translations Comparison</title>
+  <style>
+    body {
+      font-family: Arial, sans‑serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+    }
+    #sidebar {
+      width: 200px;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    #topbar {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    #content {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+    .pane {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+    }
+    .pane:last-child {
+      border-right: none;
+    }
+    #rating {
+      padding: 10px;
+      border-top: 1px solid #ccc;
+    }
+    #machineSelect {
+      margin-left: 10px;
+    }
+    .video-id-item {
+      padding: 5px;
+      cursor: pointer;
+    }
+    .video-id-item:hover {
+      background-color: #eee;
+    }
+    .video-id-item.selected {
+      background-color: #ddd;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h3>Videos</h3>
+    <div id="videoList"></div>
+  </div>
+  <div id="main">
+    <div id="topbar">
+      Machine translation folder:
+      <select id="machineSelect"></select>
+      <span id="videoLink"></span>
+    </div>
+    <div id="content">
+      <div class="pane" id="humanPane"><h4>Human Translation</h4><pre id="humanText"></pre></div>
+      <div class="pane" id="machinePane"><h4>Machine Translation</h4><pre id="machineText"></pre></div>
+    </div>
+    <div id="rating">
+      Rate this translation:
+      <label><input type="radio" name="rating" value="-" /> No choice</label>
+      <label><input type="radio" name="rating" value="H" /> Human (H)</label>
+      <label><input type="radio" name="rating" value="M" /> Machine (M)</label>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
