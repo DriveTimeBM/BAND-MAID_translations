@@ -2,11 +2,20 @@
 
 This is a browser-based tool for comparing **human** and **machine** translations of BAND-MAID video subtitles, stored in `.txt` files within this repository. It helps assess the quality of translations and record preferences.
 
-🔗 **View the reports here:**
+🔗 **View the comparison tool here:**
 
 [https://drivetimebm.github.io/BAND-MAID_translations/](https://drivetimebm.github.io/BAND-MAID_translations/)
 
 ---
+
+## Translations
+
+- **Machine Translations for folder AI-2025-10**  
+  Transcription: [TurboScribe](https://turboscribe.ai)
+  Translation: [Unofficial BAND-MAID GPT](https://chatgpt.com/g/g-68db200d63cc819190a84f2ff7cbf58f-unofficial-band-maid-gpt)
+
+- **Human Translations**  
+  [u/t-shinji on reddit](https://www.reddit.com/user/t-shinji/)
 
 ## 🚀 Features
 
