@@ -1,6 +1,18 @@
 // script.js
 (async () => {
-    const manifest = await fetch('manifest.json').then(r => r.json());
+    
+    let manifest;
+    try {
+      manifest = await fetch('manifest.json').then(r => {
+        if (!r.ok) throw new Error('Manifest fetch failed');
+        return r.json();
+      });
+    } catch (err) {
+      console.error("❌ Failed to load manifest.json:", err.message);
+      alert("Manifest file not found or invalid. Please ensure 'manifest.json' exists and is valid.");
+      return;
+    }
+    
     const humanList = manifest.human || [];
     const machineFolders = Object.keys(manifest.machine || {});
     
