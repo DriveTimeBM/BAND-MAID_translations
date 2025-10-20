@@ -153,7 +153,19 @@
       }
       alert("✅ No unrated videos remaining!");
     });
-    
+
+    document.getElementById('resetRatingsBtn').addEventListener('click', () => {
+        if (!confirm("Are you sure you want to reset all ratings to unrated?")) return;
+      
+        allIds.forEach(id => {
+          ratings[id] = "-";
+        });
+        localStorage.setItem('ratings', JSON.stringify(ratings));
+      
+        renderVideoList();
+        if (currentId) selectId(currentId);
+      });
+      
 
 
     if (allIds.length > 0) selectId(allIds[0]); // ✅ Automatically select first video
