@@ -55,6 +55,7 @@ This is a browser-based tool for comparing **human** and **machine** translation
 │ └── <videoId>.txt
 ├── AI-YYYY-MM/ ← Machine translations by folder
 │ └── <videoId>.txt
+```
 
 ---
 
