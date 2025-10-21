@@ -47,7 +47,7 @@ This is a browser-based tool for comparing **human** and **machine** translation
 
 ## 📁 Folder Structure
 
-/
+``` html
 ├── index.html ← Main app UI
 ├── script.js ← JavaScript logic
 ├── manifest.json ← Lists available video IDs
