@@ -96,3 +96,20 @@ To generate a new `manifest.json` locally using PowerShell:
 
 ```powershell
 Generate-TranslationManifest -RootPath "C:\<location>\BAND-MAID_translations" -OutputFile "manifest.json"
+```
+
+---
+
+## All BAND-MAID Projects
+
+- [BAND-MAID X/Twitter Archive](https://github.com/DriveTimeBM/BAND-MAID_tweets)
+- [BAND-MAID Song Sorter (Ranker)](https://github.com/DriveTimeBM/BAND-MAID_song_sorter)
+- [BAND-MAID GIF Catalog](https://github.com/DriveTimeBM/BAND-MAID_gifs)
+- [BAND-MAID Reports](https://github.com/DriveTimeBM/BAND-MAID_reports)
+- [BAND-MAID Instagram Archive](https://github.com/DriveTimeBM/BAND-MAID_instagram)
+- [BAND-MAID GPT](https://github.com/DriveTimeBM/BAND-MAID_gpt)
+- [BAND-MAID Prime Metadata](https://github.com/DriveTimeBM/BAND-MAID_prime)
+- [BAND-MAID Creations](https://github.com/DriveTimeBM/BAND-MAID_creations)
+- [BAND-MAID Setlists (Okyuji)](https://github.com/DriveTimeBM/BAND-MAID_okyuji)
+- [BAND-MAID Translations](https://github.com/DriveTimeBM/BAND-MAID_translations)
+- [BAND-MAID Songs](https://github.com/DriveTimeBM/BAND-MAID_songs)
